@@ -1,0 +1,335 @@
+/* Simple Entity Card Styles - Extends AdminTableCard */
+
+/* Base Simple Entity Card */
+.simpleEntityCard {
+  position: relative;
+  border-radius: var(--admin-radius-lg);
+  overflow: hidden;
+  transition: all var(--admin-transition-base) cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--admin-bg-primary);
+  border: 1px solid var(--admin-border-light);
+  box-shadow: var(--admin-shadow-sm);
+}
+
+.simpleEntityCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--admin-shadow-lg);
+  border-color: var(--entity-gradient, var(--admin-primary-light));
+}
+
+/* Entity Type Specific Styles */
+.simpleEntityCard.category {
+  --entity-gradient: linear-gradient(135deg, #1890ff 0%, #40a9ff 100%);
+}
+
+.simpleEntityCard.category:hover {
+  border-color: #1890ff;
+  box-shadow: 0 8px 25px rgba(24, 144, 255, 0.15);
+}
+
+.simpleEntityCard.type {
+  --entity-gradient: linear-gradient(135deg, #52c41a 0%, #73d13d 100%);
+}
+
+.simpleEntityCard.type:hover {
+  border-color: #52c41a;
+  box-shadow: 0 8px 25px rgba(82, 196, 26, 0.15);
+}
+
+/* Card Header Customizations for Simple Entities */
+.simpleEntityCard :global(.cardHeader) {
+  padding: var(--admin-space-lg) var(--admin-space-lg) var(--admin-space-md);
+  background: transparent;
+  border-bottom: none;
+}
+
+.simpleEntityCard :global(.headerAvatar) {
+  margin-bottom: var(--admin-space-sm);
+}
+
+.simpleEntityCard :global(.cardTitle) {
+  font-size: var(--admin-font-size-xl);
+  font-weight: var(--admin-font-weight-bold);
+  color: var(--admin-text-primary);
+  margin-bottom: var(--admin-space-xs);
+  line-height: var(--admin-line-height-tight);
+}
+
+.simpleEntityCard :global(.cardSubtitle) {
+  font-size: var(--admin-font-size-sm);
+  color: var(--admin-text-secondary);
+  font-weight: var(--admin-font-weight-medium);
+  background: var(--admin-bg-secondary);
+  padding: var(--admin-space-xs) var(--admin-space-sm);
+  border-radius: var(--admin-radius-sm);
+  display: inline-block;
+  margin: 0;
+}
+
+/* Card Body Customizations - Minimal for Simple Entities */
+.simpleEntityCard :global(.cardBody) {
+  padding: 0 var(--admin-space-lg) var(--admin-space-md);
+  min-height: 0;
+}
+
+/* Card Footer Customizations */
+.simpleEntityCard :global(.cardFooter) {
+  padding: var(--admin-space-md) var(--admin-space-lg) var(--admin-space-lg);
+  background: transparent;
+  border-top: 1px solid var(--admin-border-lighter);
+  justify-content: center;
+  gap: var(--admin-space-sm);
+}
+
+/* Enhanced Action Buttons */
+.simpleEntityCard :global(.cardFooter button) {
+  flex: 1;
+  max-width: 120px;
+  padding: var(--admin-space-sm) var(--admin-space-md);
+  border-radius: var(--admin-radius-md);
+  font-weight: var(--admin-font-weight-medium);
+  font-size: var(--admin-font-size-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--admin-space-xs);
+  transition: all var(--admin-transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.simpleEntityCard :global(.cardFooter button::before) {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.simpleEntityCard :global(.cardFooter button:hover::before) {
+  left: 100%;
+}
+
+.simpleEntityCard :global(.cardFooter button:hover) {
+  transform: translateY(-2px);
+  box-shadow: var(--admin-shadow-md);
+}
+
+/* Success Button (Edit) */
+.simpleEntityCard :global(.cardFooter button.btn-success) {
+  background: var(--admin-success);
+  border: 1px solid var(--admin-success);
+}
+
+.simpleEntityCard :global(.cardFooter button.btn-success:hover) {
+  background: #389e0d;
+  border-color: #389e0d;
+  box-shadow: 0 4px 12px rgba(82, 196, 26, 0.3);
+}
+
+/* Danger Button (Delete) */
+.simpleEntityCard :global(.cardFooter button.btn-danger) {
+  background: var(--admin-error);
+  border: 1px solid var(--admin-error);
+}
+
+.simpleEntityCard :global(.cardFooter button.btn-danger:hover) {
+  background: #cf1322;
+  border-color: #cf1322;
+  box-shadow: 0 4px 12px rgba(255, 77, 79, 0.3);
+}
+
+/* Animation Classes */
+.simpleEntityCard.animate {
+  animation: simpleEntitySlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes simpleEntitySlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Loading State */
+.simpleEntityCard.loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.loadingOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  backdrop-filter: blur(2px);
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--admin-border-light);
+  border-top: 2px solid var(--admin-primary);
+  border-radius: 50%;
+  animation: simpleEntitySpin 0.8s linear infinite;
+}
+
+@keyframes simpleEntitySpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Empty State */
+.simpleEntityCard.empty {
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--admin-border-light);
+  background: var(--admin-bg-secondary);
+}
+
+.emptyState {
+  text-align: center;
+  color: var(--admin-text-tertiary);
+}
+
+.emptyIcon {
+  display: block;
+  font-size: 48px;
+  margin-bottom: var(--admin-space-md);
+  opacity: 0.5;
+}
+
+.emptyState p {
+  margin: 0;
+  font-size: var(--admin-font-size-sm);
+  font-weight: var(--admin-font-weight-medium);
+}
+
+/* Avatar Enhancements for Simple Entities */
+.simpleEntityCard :global(.headerAvatar > div) {
+  width: 56px !important;
+  height: 56px !important;
+  font-size: 24px !important;
+  box-shadow: var(--admin-shadow-md) !important;
+  border: 2px solid var(--admin-white);
+}
+
+/* Focus and Accessibility */
+.simpleEntityCard:focus-within {
+  outline: 2px solid var(--entity-gradient, var(--admin-primary));
+  outline-offset: 2px;
+}
+
+.simpleEntityCard :global(.cardFooter button:focus) {
+  outline: 2px solid var(--admin-white);
+  outline-offset: 2px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .simpleEntityCard {
+    margin-bottom: var(--admin-space-md);
+    border-radius: var(--admin-radius-md);
+  }
+  
+  .simpleEntityCard :global(.cardHeader),
+  .simpleEntityCard :global(.cardBody),
+  .simpleEntityCard :global(.cardFooter) {
+    padding-left: var(--admin-space-md);
+    padding-right: var(--admin-space-md);
+  }
+  
+  .simpleEntityCard :global(.headerAvatar > div) {
+    width: 48px !important;
+    height: 48px !important;
+    font-size: 20px !important;
+  }
+  
+  .simpleEntityCard :global(.cardTitle) {
+    font-size: var(--admin-font-size-lg);
+  }
+  
+  .simpleEntityCard :global(.cardFooter button) {
+    max-width: 100px;
+    padding: var(--admin-space-xs) var(--admin-space-sm);
+    font-size: var(--admin-font-size-xs);
+  }
+  
+  .simpleEntityCard.animate {
+    animation: simpleEntitySlideInMobile 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+  
+  @keyframes simpleEntitySlideInMobile {
+    from {
+      opacity: 0;
+      transform: translateY(15px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .simpleEntityCard :global(.cardFooter) {
+    flex-direction: column;
+    gap: var(--admin-space-xs);
+  }
+  
+  .simpleEntityCard :global(.cardFooter button) {
+    max-width: none;
+    width: 100%;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .simpleEntityCard {
+    background: var(--admin-bg-primary);
+    border-color: var(--admin-border-dark);
+  }
+  
+  .loadingOverlay {
+    background: rgba(0, 0, 0, 0.7);
+  }
+  
+  .simpleEntityCard.empty {
+    background: var(--admin-bg-tertiary);
+    border-color: var(--admin-border-dark);
+  }
+}
+
+/* Print styles */
+@media print {
+  .simpleEntityCard {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ccc;
+  }
+  
+  .simpleEntityCard :global(.cardFooter button) {
+    display: none;
+  }
+  
+  .loadingOverlay {
+    display: none;
+  }
+}

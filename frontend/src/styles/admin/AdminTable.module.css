@@ -1,0 +1,1096 @@
+/* Admin Table Component Styles */
+
+.tableContainer {
+  background: var(--admin-bg-primary);
+  border: 1px solid var(--admin-border-light);
+  border-radius: var(--admin-radius-lg);
+  box-shadow: var(--admin-shadow-sm);
+  overflow: hidden;
+  transition: var(--admin-transition-base);
+}
+
+.tableContainer:hover {
+  box-shadow: var(--admin-shadow-base);
+}
+
+.tableContainerPremium {
+  background: var(--admin-bg-primary);
+  border: 1px solid var(--admin-border-light);
+  border-radius: var(--admin-radius-xl);
+  box-shadow: var(--admin-shadow-base);
+  overflow: hidden;
+  transition: var(--admin-transition-base);
+}
+
+.tableContainerPremium:hover {
+  box-shadow: var(--admin-shadow-md);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--admin-font-size-sm);
+}
+
+.table th {
+  background: var(--admin-bg-secondary);
+  color: var(--admin-text-primary);
+  font-weight: var(--admin-font-weight-semibold);
+  text-align: left;
+  padding: var(--admin-space-md);
+  border-bottom: 2px solid var(--admin-border-base);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  white-space: nowrap;
+}
+
+.table td {
+  padding: var(--admin-space-md);
+  border-bottom: 1px solid var(--admin-border-light);
+  color: var(--admin-text-primary);
+  vertical-align: middle;
+}
+
+.table tbody tr {
+  transition: var(--admin-transition-fast);
+}
+
+.table tbody tr:hover {
+  background: var(--admin-bg-secondary);
+}
+
+.table tbody tr:hover td {
+  color: var(--admin-text-primary);
+}
+
+/* Table Header Variants */
+.tableHeaderPrimary {
+  background: linear-gradient(135deg, var(--admin-primary) 0%, var(--admin-primary-light) 100%);
+  color: var(--admin-white);
+}
+
+.tableHeaderPrimary th {
+  background: transparent;
+  border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+
+.tableHeaderDark {
+  background: var(--admin-bg-dark);
+  color: var(--admin-white);
+}
+
+.tableHeaderDark th {
+  background: transparent;
+  border-bottom-color: var(--admin-border-dark);
+}
+
+/* Table Row Variants */
+.tableRowStriped tbody tr:nth-child(even) {
+  background: var(--admin-bg-secondary);
+}
+
+.tableRowStriped tbody tr:nth-child(even):hover {
+  background: var(--admin-bg-tertiary);
+}
+
+.tableRowBordered tbody tr {
+  border-bottom: 1px solid var(--admin-border-base);
+}
+
+.tableRowHover tbody tr:hover {
+  background: linear-gradient(135deg, var(--admin-bg-secondary) 0%, rgba(255, 77, 79, 0.05) 100%);
+  transform: translateX(2px);
+}
+
+.tableRowHover tbody tr:hover td {
+  color: var(--admin-text-primary);
+  font-weight: var(--admin-font-weight-medium);
+}
+
+/* Table Cell Styles */
+.tableCellText {
+  font-weight: var(--admin-font-weight-normal);
+}
+
+.tableCellBold {
+  font-weight: var(--admin-font-weight-semibold);
+}
+
+.tableCellMuted {
+  color: var(--admin-text-secondary);
+}
+
+.tableCellSuccess {
+  color: var(--admin-success);
+  font-weight: var(--admin-font-weight-medium);
+}
+
+.tableCellWarning {
+  color: var(--admin-warning);
+  font-weight: var(--admin-font-weight-medium);
+}
+
+.tableCellError {
+  color: var(--admin-error);
+  font-weight: var(--admin-font-weight-medium);
+}
+
+.tableCellInfo {
+  color: var(--admin-info);
+  font-weight: var(--admin-font-weight-medium);
+}
+
+/* Table Actions */
+.tableActions {
+  display: flex;
+  gap: var(--admin-space-sm);
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.tableAction {
+  padding: var(--admin-space-xs) var(--admin-space-sm);
+  border-radius: var(--admin-radius-sm);
+  background: transparent;
+  border: 1px solid var(--admin-border-light);
+  color: var(--admin-text-secondary);
+  cursor: pointer;
+  transition: var(--admin-transition-fast);
+  font-size: var(--admin-font-size-xs);
+  font-weight: var(--admin-font-weight-medium);
+}
+
+.tableAction:hover {
+  background: var(--admin-primary);
+  color: var(--admin-white);
+  border-color: var(--admin-primary);
+  transform: translateY(-1px);
+}
+
+.tableActionDanger:hover {
+  background: var(--admin-error);
+  border-color: var(--admin-error);
+}
+
+.tableActionSuccess:hover {
+  background: var(--admin-success);
+  border-color: var(--admin-success);
+}
+
+/* Info action — used for gift / info buttons */
+.tableActionInfo {
+  background: transparent;
+  border-color: transparent;
+  color: var(--admin-info);
+}
+
+.tableActionInfo:hover {
+  background: var(--admin-info);
+  color: var(--admin-white);
+  border-color: var(--admin-info);
+}
+
+/* Table Status Badges */
+.tableBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--admin-space-xs) var(--admin-space-sm);
+  border-radius: var(--admin-radius-base);
+  font-size: var(--admin-font-size-xs);
+  font-weight: var(--admin-font-weight-semibold);
+  text-transform: none;
+  letter-spacing: 0.5px;
+}
+
+.tableBadgeActive {
+  background: linear-gradient(135deg, #f6ffed 0%, #d9f7be 100%);
+  color: #52c41a;
+  border: 1px solid #b7eb8f;
+}
+
+.tableBadgeInactive {
+  background: linear-gradient(135deg, #fff2e8 0%, #ffd8bf 100%);
+  color: var(--admin-warning);
+  border: 1px solid #ffbb96;
+}
+
+.tableBadgePending {
+  background: linear-gradient(135deg, #e6f7ff 0%, #bae7ff 100%);
+  color: var(--admin-info);
+  border: 1px solid #91d5ff;
+}
+
+.tableBadgeError {
+  background: linear-gradient(135deg, #fff2f0 0%, #ffccc7 100%);
+  color: #ff4d4f;
+  border: 1px solid #ffa39e;
+}
+
+/* Table Size Variants */
+.tableCompact th,
+.tableCompact td {
+  padding: var(--admin-space-sm);
+}
+
+.tableSpacious th,
+.tableSpacious td {
+  padding: var(--admin-space-lg);
+}
+
+.tableSmall {
+  font-size: var(--admin-font-size-xs);
+}
+
+.tableLarge {
+  font-size: var(--admin-font-size-base);
+}
+
+/* Table Responsive */
+.tableResponsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tableResponsive::-webkit-scrollbar {
+  height: 8px;
+}
+
+.tableResponsive::-webkit-scrollbar-track {
+  background: var(--admin-bg-secondary);
+}
+
+.tableResponsive::-webkit-scrollbar-thumb {
+  background: var(--admin-border-base);
+  border-radius: var(--admin-radius-sm);
+}
+
+.tableResponsive::-webkit-scrollbar-thumb:hover {
+  background: var(--admin-primary);
+}
+
+/* Table Loading State */
+.tableLoading {
+  position: relative;
+}
+
+.tableLoading::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 20;
+}
+
+.tableLoadingOverlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 21;
+}
+
+.tableLoadingSpinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--admin-border-light);
+  border-top: 3px solid var(--admin-primary);
+  border-radius: 50%;
+  animation: tableSpin 1s linear infinite;
+}
+
+@keyframes tableSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Table Empty State */
+.tableEmpty {
+  text-align: center;
+  padding: var(--admin-space-3xl);
+  color: var(--admin-text-secondary);
+}
+
+.tableEmptyIcon {
+  font-size: 48px;
+  margin-bottom: var(--admin-space-md);
+  opacity: 0.5;
+}
+
+.tableEmptyTitle {
+  font-size: var(--admin-font-size-lg);
+  font-weight: var(--admin-font-weight-semibold);
+  color: var(--admin-text-primary);
+  margin-bottom: var(--admin-space-sm);
+}
+
+.tableEmptyDescription {
+  font-size: var(--admin-font-size-sm);
+  color: var(--admin-text-secondary);
+  margin-bottom: var(--admin-space-lg);
+}
+
+/* Table Sortable Headers */
+.tableSortable {
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tableSortable:hover {
+  background: var(--admin-bg-tertiary);
+}
+
+.tableSortIcon {
+  margin-left: var(--admin-space-xs);
+  opacity: 0.5;
+  transition: var(--admin-transition-fast);
+}
+
+.tableSortable:hover .tableSortIcon {
+  opacity: 1;
+}
+
+.tableSortAsc .tableSortIcon::after {
+  content: '↑';
+}
+
+.tableSortDesc .tableSortIcon::after {
+  content: '↓';
+}
+
+/* Table Filter Row */
+.tableFilterRow {
+  background: var(--admin-bg-secondary);
+  border-bottom: 1px solid var(--admin-border-base);
+}
+
+.tableFilterRow td {
+  padding: var(--admin-space-sm);
+}
+
+.tableFilterInput {
+  width: 100%;
+  padding: var(--admin-space-xs) var(--admin-space-sm);
+  border: 1px solid var(--admin-border-base);
+  border-radius: var(--admin-radius-sm);
+  font-size: var(--admin-font-size-sm);
+  transition: var(--admin-transition-fast);
+}
+
+.tableFilterInput:focus {
+  outline: none;
+  border-color: var(--admin-primary);
+  box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.1);
+}
+
+/* Table Pagination */
+.tablePagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--admin-space-md);
+  background: var(--admin-bg-secondary);
+  border-top: 1px solid var(--admin-border-light);
+}
+
+/* Thumbnails and card image variants used across admin pages */
+.cardImageWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--admin-bg-secondary);
+}
+
+.cardImageSmall {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  display: block;
+}
+
+.productThumbnailSmall {
+  width: 64px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.cardSubtitleSmall {
+  margin: 6px 0 0;
+  color: var(--admin-text-secondary);
+  font-size: var(--admin-font-size-sm);
+  line-height: 1.2;
+  max-height: 2.4em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tablePaginationInfo {
+  color: var(--admin-text-secondary);
+  font-size: var(--admin-font-size-sm);
+}
+
+.tablePaginationControls {
+  display: flex;
+  gap: var(--admin-space-sm);
+  align-items: center;
+}
+
+/* Table Selection */
+.tableSelectable tbody tr {
+  cursor: pointer;
+}
+
+.tableSelectable tbody tr:hover {
+  background: linear-gradient(135deg, var(--admin-bg-secondary) 0%, rgba(255, 77, 79, 0.05) 100%);
+}
+
+.tableSelected {
+  background: linear-gradient(135deg, rgba(255, 77, 79, 0.1) 0%, rgba(255, 77, 79, 0.05) 100%) !important;
+  border-left: 3px solid var(--admin-primary);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .tableContainer,
+  .tableContainerPremium {
+    border-radius: var(--admin-radius-md);
+  }
+  
+  .table th,
+.table td {
+    padding: var(--admin-space-sm);
+    font-size: var(--admin-font-size-xs);
+  }
+  
+  .tableActions {
+    flex-direction: column;
+    gap: var(--admin-space-xs);
+  }
+  
+  .tablePagination {
+    flex-direction: column;
+    gap: var(--admin-space-md);
+  }
+  
+  .tablePaginationControls {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Dark Theme Support */
+@media (prefers-color-scheme: dark) {
+  .tableLoading::before {
+    background: rgba(31, 31, 31, 0.8);
+  }
+  
+  .tableBadgeActive {
+    background: linear-gradient(135deg, #162312 0%, #237804 100%);
+    border-color: #135200;
+  }
+  
+  .tableBadgeInactive {
+    background: linear-gradient(135deg, #2b2111 0%, #613400 100%);
+    border-color: #3d2300;
+  }
+  
+  .tableBadgePending {
+    background: linear-gradient(135deg, #111b26 0%, #003a8c 100%);
+    border-color: #002766;
+  }
+  
+  .tableBadgeError {
+    background: linear-gradient(135deg, #2a1212 0%, #820014 100%);
+    border-color: #5c0000;
+  }
+}
+
+/* Animation Classes */
+.tableAnimateIn {
+  animation: admin-fade-in var(--admin-transition-base) ease-out;
+}
+
+.tableRowAnimateIn tbody tr {
+  animation: admin-slide-up var(--admin-transition-base) ease-out;
+  animation-fill-mode: both;
+}
+
+.tableRowAnimateIn tbody tr:nth-child(1) { animation-delay: 0.05s; }
+.tableRowAnimateIn tbody tr:nth-child(2) { animation-delay: 0.1s; }
+.tableRowAnimateIn tbody tr:nth-child(3) { animation-delay: 0.15s; }
+.tableRowAnimateIn tbody tr:nth-child(4) { animation-delay: 0.2s; }
+.tableRowAnimateIn tbody tr:nth-child(5) { animation-delay: 0.25s; }
+
+/* Focus Styles for Accessibility */
+.tableFocusable tbody tr:focus {
+  outline: 2px solid var(--admin-primary);
+  outline-offset: -2px;
+  }
+
+.tableFocusable tbody tr:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Table Column Priority Classes */
+.tableColumnCritical {
+  min-width: 120px;
+}
+
+.tableColumnImportant {
+  min-width: 100px;
+}
+
+.tableColumnSecondary {
+  min-width: 80px;
+}
+
+/* Enhanced Responsive Table */
+.tableResponsiveEnhanced {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+.tableResponsiveEnhanced::-webkit-scrollbar {
+  height: 6px;
+}
+
+.tableResponsiveEnhanced::-webkit-scrollbar-track {
+  background: var(--admin-bg-secondary);
+  border-radius: var(--admin-radius-sm);
+}
+
+.tableResponsiveEnhanced::-webkit-scrollbar-thumb {
+  background: var(--admin-border-base);
+  border-radius: var(--admin-radius-sm);
+}
+
+.tableResponsiveEnhanced::-webkit-scrollbar-thumb:hover {
+  background: var(--admin-primary);
+}
+
+/* Mobile Table Container */
+.tableMobileContainer {
+  display: none;
+}
+
+/* Mobile Card Grid */
+.tableMobileCardGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--admin-space-md);
+  padding: var(--admin-space-md);
+}
+
+/* Mobile Pagination Styles */
+.tablePaginationMobile {
+  padding: var(--admin-space-sm) var(--admin-space-md);
+  background: var(--admin-bg-secondary);
+  border-top: 1px solid var(--admin-border-light);
+  flex-direction: column;
+  gap: var(--admin-space-sm);
+}
+
+/* Additional Badge Variants */
+.tableBadgeInfo {
+  background: linear-gradient(135deg, #e6f7ff 0%, #bae7ff 100%);
+  color: var(--admin-info);
+  border: 1px solid #91d5ff;
+}
+
+.tableBadgeWarning {
+  background: linear-gradient(135deg, #fffbe6 0%, #fff1b8 100%);
+  color: var(--admin-warning);
+  border: 1px solid #ffe58f;
+}
+
+.tableBadgeSuccess {
+  background: linear-gradient(135deg, #f6ffed 0%, #d9f7be 100%);
+  color: #52c41a;
+  border: 1px solid #b7eb8f;
+}
+
+.tableBadgeSecondary {
+  background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+  color: #8c8c8c;
+  border: 1px solid #d9d9d9;
+}
+
+/* Enhanced Loading State */
+.tableLoadingEnhanced {
+  position: relative;
+  min-height: 200px;
+}
+
+.tableLoadingEnhanced::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(2px);
+  z-index: 20;
+  border-radius: var(--admin-radius-lg);
+}
+
+/* Enhanced Empty State */
+.tableEmptyEnhanced {
+  text-align: center;
+  padding: var(--admin-space-4xl) var(--admin-space-xl);
+  color: var(--admin-text-secondary);
+  background: linear-gradient(135deg, var(--admin-bg-primary) 0%, var(--admin-bg-secondary) 100%);
+  border-radius: var(--admin-radius-lg);
+  margin: var(--admin-space-lg);
+}
+
+.tableEmptyEnhanced .tableEmptyIcon {
+  font-size: 64px;
+  margin-bottom: var(--admin-space-lg);
+  opacity: 0.6;
+}
+
+.tableEmptyEnhanced .tableEmptyTitle {
+  font-size: var(--admin-font-size-xl);
+  font-weight: var(--admin-font-weight-bold);
+  color: var(--admin-text-primary);
+  margin-bottom: var(--admin-space-md);
+}
+
+.tableEmptyEnhanced .tableEmptyDescription {
+  font-size: var(--admin-font-size-base);
+  color: var(--admin-text-secondary);
+  margin-bottom: var(--admin-space-xl);
+  line-height: var(--admin-line-height-relaxed);
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+  .tableColumnCritical,
+  .tableColumnImportant,
+  .tableColumnSecondary {
+    min-width: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .tableMobileContainer {
+    display: block;
+  }
+  
+  .tableResponsiveEnhanced {
+    display: none;
+  }
+  
+  .tableMobileCardGrid {
+    gap: var(--admin-space-sm);
+    padding: var(--admin-space-sm);
+  }
+  
+  .tablePaginationMobile {
+    padding: var(--admin-space-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .tableMobileCardGrid {
+    padding: var(--admin-space-xs);
+  }
+  
+  .tablePaginationMobile {
+    padding: var(--admin-space-xs);
+  }
+}
+
+/* ======================================== */
+/* ENHANCED RESPONSIVE TABLE-TO-CARD CONVERSION SYSTEM */
+/* ======================================== */
+/* STANDARDIZED MOBILE RESPONSIVE CLASSES */
+/* ======================================== */
+
+/* Standard mobile hiding classes - consistent across all admin pages */
+.adminTableHideOnMobile {
+  display: block;
+}
+
+.adminTableShowOnMobile {
+  display: none;
+}
+
+.adminTableHideOnTablet {
+  display: block;
+}
+
+.adminTableShowOnTablet {
+  display: none;
+}
+
+/* Enhanced responsive breakpoints */
+@media (max-width: 767px) {
+  .adminTableHideOnMobile {
+    display: none !important;
+  }
+  
+  .adminTableShowOnMobile {
+    display: block !important;
+  }
+  
+  .tableContainer,
+  .tableContainerPremium {
+    border-radius: var(--admin-radius-md);
+    margin-bottom: var(--admin-space-md);
+  }
+  
+  .table th,
+  .table td {
+    padding: var(--admin-space-sm);
+    font-size: var(--admin-font-size-xs);
+  }
+  
+  .tableActions {
+    flex-direction: column;
+    gap: var(--admin-space-xs);
+  }
+  
+  .tablePagination {
+    flex-direction: column;
+    gap: var(--admin-space-md);
+  }
+  
+  .tablePaginationControls {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .adminTableHideOnTablet {
+    display: none !important;
+  }
+  
+  .adminTableShowOnTablet {
+    display: block !important;
+  }
+  
+  .table th,
+  .table td {
+    padding: calc(var(--admin-space-sm) + 2px);
+    font-size: var(--admin-font-size-sm);
+  }
+}
+
+@media (min-width: 768px) {
+  .adminTableHideOnMobile {
+    display: block !important;
+  }
+  
+  .adminTableShowOnMobile {
+    display: none !important;
+  }
+  
+  .tablePagination {
+    flex-direction: row;
+    gap: var(--admin-space-sm);
+  }
+  
+  .tablePaginationControls {
+    width: auto;
+    justify-content: flex-end;
+  }
+}
+
+/* ======================================== */
+/* ENHANCED MOBILE CARD GRID SYSTEM */
+/* ======================================== */
+
+/* ======================================== */
+
+/* Responsive Container Classes */
+.adminTableDesktop {
+  display: block;
+}
+
+.adminTableCards {
+  display: none;
+}
+
+.adminTableMobileCardGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--admin-space-md);
+  padding: var(--admin-space-md);
+  transition: var(--admin-transition-base);
+}
+
+/* Mobile Card Grid Styles */
+.adminTableMobileCardGrid {
+  background: var(--admin-bg-primary);
+  border: 1px solid var(--admin-border-light);
+  border-radius: var(--admin-radius-lg);
+  box-shadow: var(--admin-shadow-sm);
+  overflow: hidden;
+  transition: var(--admin-transition-base);
+}
+
+.adminTableMobileCardGrid--loading {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.adminTableMobileCardGrid--empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+/* Responsive Utilities */
+.adminTableHideOnMobile {
+  display: block;
+}
+
+.adminTableHideOnDesktop {
+  display: none;
+}
+
+.adminTableShowOnMobile {
+  display: block;
+}
+
+.adminTableShowOnDesktop {
+  display: block;
+}
+
+/* Animation Classes */
+.adminTableCardEntry {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: var(--admin-transition-slow);
+}
+
+.adminTableCardExit {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: var(--admin-transition-slow);
+}
+
+.adminTableCardStagger {
+  transition-delay: calc(var(--stagger-index) * var(--stagger-delay));
+}
+
+/* Loading States */
+.adminTableCardShimmer {
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0.2) 50%, 
+    rgba(255, 255, 255, 0.1) 100%);
+  background-size: 200% 100%;
+  animation: admin-shimmer 2s infinite;
+}
+
+.adminTableCardSkeleton {
+  background: var(--admin-bg-secondary);
+  border-radius: var(--admin-radius-sm);
+  margin-bottom: var(--admin-space-sm);
+}
+
+/* Responsive Breakpoint Integration */
+@media (max-width: 768px) {
+  .adminTableDesktop { 
+    display: none; 
+  }
+  
+  .adminTableCards { 
+    display: grid; 
+  }
+  
+  .adminTableMobileCardGrid {
+    grid-template-columns: 1fr;
+    padding: var(--admin-space-sm);
+  }
+  
+  .tablePagination {
+    flex-direction: column;
+    gap: var(--admin-space-md);
+  }
+  
+  .tablePaginationControls {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+  @media (min-width: 769px) {
+  .adminTableDesktop { 
+    display: block; 
+  }
+  
+  .adminTableCards { 
+    display: none; 
+  }
+  
+  .tablePagination {
+    flex-direction: row;
+    gap: var(--admin-space-sm);
+  }
+  
+  .tablePaginationControls {
+    width: auto;
+    justify-content: flex-end;
+  }
+}
+
+/* Dark Theme Support for Mobile Cards */
+@media (prefers-color-scheme: dark) {
+  .adminTableMobileCardGrid {
+    background: var(--admin-bg-dark);
+    border-color: var(--admin-border-dark);
+  }
+  
+  .adminTableCardShimmer {
+    background: linear-gradient(90deg, 
+      rgba(255, 255, 255, 0.05) 0%, 
+      rgba(255, 255, 255, 0.1) 50%, 
+      rgba(255, 255, 255, 0.05) 100%);
+  }
+
+  .adminTableCardSkeleton {
+    background: var(--admin-bg-tertiary);
+  }
+}
+
+/* Hover States and Micro-interactions */
+.adminTableMobileCardGrid:hover .adminTableCardEntry {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.adminTableMobileCardGrid:hover .adminTableCardExit {
+  transform: translateY(-20px);
+  opacity: 0;
+}
+
+/* Keyframe Animations */
+@keyframes admin-fade-in {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  } 
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  } 
+}
+
+@keyframes admin-slide-up {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  } 
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  } 
+}
+
+@keyframes admin-shimmer {
+  0% { 
+    background-position: -200% 0; 
+  } 
+  100% { 
+    background-position: 200% 0; 
+  } 
+}
+
+/* CSS Variables for Stagger System */
+.adminTableMobileCardGrid {
+  --stagger-index: 0;
+}
+
+.adminTableMobileCardGrid .adminTableCardEntry:nth-child(1) { --stagger-index: 1; }
+.adminTableMobileCardGrid .adminTableCardEntry:nth-child(2) { --stagger-index: 2; }
+.adminTableMobileCardGrid .adminTableCardEntry:nth-child(3) { --stagger-index: 3; }
+.adminTableMobileCardGrid .adminTableCardEntry:nth-child(4) { --stagger-index: 4; }
+.adminTableMobileCardGrid .adminTableCardEntry:nth-child(5) { --stagger-index: 5; }
+.adminTableMobileCardGrid .adminTableCardEntry:nth-child(6) { --stagger-index: 6; }
+.adminTableMobileCardGrid .adminTableCardEntry:nth-child(7) { --stagger-index: 7; }
+.adminTableMobileCardGrid .adminTableCardEntry:nth-child(8) { --stagger-index: 8; }
+.adminTableMobileCardGrid .adminTableCardEntry:nth-child(9) { --stagger-index: 9; }
+.adminTableMobileCardGrid .adminTableCardEntry:nth-child(10) { --stagger-index: 10; }
+
+/* CSS Variables for Animation Delays */
+.adminTableMobileCardGrid {
+  --stagger-delay: 0.1s;
+}
+
+/* Additional Responsive Enhancements */
+@media (max-width: 1024px) {
+  .tableResponsiveEnhanced {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .tableResponsiveEnhanced {
+    display: none;
+  }
+}
+
+/* Focus Management for Mobile Cards */
+.adminTableMobileCardGrid:focus-within {
+  outline: 2px solid var(--admin-primary);
+  outline-offset: 2px;
+  border-radius: var(--admin-radius-md);
+}
+
+/* Performance Optimizations */
+.adminTableMobileCardGrid * {
+  will-change: transform, opacity;
+}
+
+/* Integration with existing tableResponsive class */
+.tableResponsive .adminTableDesktop,
+.tableResponsive .adminTableCards {
+  display: none;
+}
+
+.tableResponsive .adminTableMobileCardGrid {
+  display: grid;
+}
+
+
+/* Ensure proper stacking context */
+.adminTableMobileCardGrid {
+  transform-style: preserve-3d;
+}
+
+/* Accessibility Enhancements */
+.adminTableMobileCardGrid:focus-within {
+  outline: 2px solid var(--admin-primary);
+  outline-offset: 2px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .adminTableCardEntry,
+  .adminTableCardExit {
+    transition: none;
+  }
+  
+  .adminTableCardStagger {
+    transition-delay: 0s;
+  }
+}

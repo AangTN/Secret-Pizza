@@ -1,0 +1,65 @@
+:root {
+  /* Brand palette - Modern Professional */
+  --primary: #e63946;
+  --primary-dark: #a4161a;
+  --primary-light: #ff7875;
+  --secondary: #2a9d8f;
+  --accent: #f4a261;
+  --success: #06a77d;
+  --gold: #f8b229;
+
+  /* Neutral surface + typography */
+  --dark: #121212;
+  --background: #fafafa;
+  --surface: #ffffff;
+  --surface-alt: #f8f9fa;
+  --text-primary: #1a1a1a;
+  --text-secondary: #666666;
+  --border: #e0e0e0;
+
+  /* Elevation + motion + shadows */
+  --shadow-0: none;
+  --shadow-1: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-2: 0 2px 6px rgba(0,0,0,0.12);
+  --shadow-3: 0 4px 12px rgba(0,0,0,0.15);
+  --shadow-4: 0 8px 24px rgba(0,0,0,0.18);
+  --shadow-5: 0 16px 40px rgba(0,0,0,0.22);
+  
+  /* Borders */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --hero-video-overlay: rgba(0, 0, 0, 0.4);
+}
+
+body.theme-standard {
+  --primary: #e63946;
+  --primary-dark: #a4161a;
+  --primary-light: #ff7875;
+  --secondary: #2a9d8f;
+  --gold: #f8b229;
+  --hero-video-overlay: rgba(0, 0, 0, 0.4);
+  background: var(--background);
+}
+
+body.christmas-theme,
+body.theme-holiday {
+  --primary: #e63946;
+  --primary-dark: #a4161a;
+  --primary-light: #ff7875;
+  --secondary: #2a9d8f;
+  --gold: #f8b229;
+  --hero-video-overlay: rgba(0, 0, 0, 0.4);
+  background: var(--background);
+}

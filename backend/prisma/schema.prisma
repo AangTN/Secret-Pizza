@@ -1,0 +1,386 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model BienTheMonAn {
+  MaBienThe                   Int                           @id @default(autoincrement())
+  MaMonAn                     Int
+  MaSize                      Int?
+  GiaBan                      Decimal                       @db.Decimal(10, 2)
+  TrangThai                   String?                       @default("Active") @db.VarChar(20)
+  MonAn                       MonAn                         @relation(fields: [MaMonAn], references: [MaMonAn], onDelete: NoAction, onUpdate: NoAction)
+  Size                        Size?                         @relation(fields: [MaSize], references: [MaSize], onDelete: NoAction, onUpdate: NoAction)
+  ChiTietDonHang              ChiTietDonHang[]
+  ChiTietDonHang_ChiTietCombo ChiTietDonHang_ChiTietCombo[]
+  Combo_ChiTiet               Combo_ChiTiet[]
+}
+
+model ChiTietDonHang {
+  MaChiTiet                   Int                           @id @default(autoincrement())
+  MaDonHang                   Int
+  MaBienThe                   Int
+  MaDeBanh                    Int?
+  SoLuong                     Int                           @default(1)
+  DonGia                      Decimal                       @db.Decimal(10, 2)
+  ThanhTien                   Decimal                       @db.Decimal(10, 2)
+  Loai                        String                        @default("SP") @db.VarChar(20)
+  MaCombo                     Int?
+  BienTheMonAn                BienTheMonAn                  @relation(fields: [MaBienThe], references: [MaBienThe], onDelete: NoAction, onUpdate: NoAction)
+  Combo                       Combo?                        @relation(fields: [MaCombo], references: [MaCombo], onDelete: NoAction, onUpdate: NoAction)
+  DeBanh                      DeBanh?                       @relation(fields: [MaDeBanh], references: [MaDeBanh], onDelete: NoAction, onUpdate: NoAction)
+  DonHang                     DonHang                       @relation(fields: [MaDonHang], references: [MaDonHang], onDelete: NoAction, onUpdate: NoAction)
+  ChiTietDonHang_ChiTietCombo ChiTietDonHang_ChiTietCombo[]
+  ChiTietDonHang_TuyChon      ChiTietDonHang_TuyChon[]
+}
+
+model ChiTietDonHang_ChiTietCombo {
+  MaCTDH_Combo     Int            @id @default(autoincrement())
+  MaChiTietDonHang Int
+  SoLuong          Int            @default(1)
+  MaBienThe        Int?
+  MaDeBanh         Int?
+  BienTheMonAn     BienTheMonAn?  @relation(fields: [MaBienThe], references: [MaBienThe], onDelete: NoAction, onUpdate: NoAction)
+  ChiTietDonHang   ChiTietDonHang @relation(fields: [MaChiTietDonHang], references: [MaChiTiet], onDelete: Cascade, onUpdate: NoAction)
+  DeBanh           DeBanh?        @relation(fields: [MaDeBanh], references: [MaDeBanh], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model ChiTietDonHang_TuyChon {
+  MaChiTiet      Int
+  MaTuyChon      Int
+  GiaThem        Decimal        @db.Decimal(10, 2)
+  ChiTietDonHang ChiTietDonHang @relation(fields: [MaChiTiet], references: [MaChiTiet], onDelete: NoAction, onUpdate: NoAction)
+  TuyChon        TuyChon        @relation(fields: [MaTuyChon], references: [MaTuyChon], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([MaChiTiet, MaTuyChon])
+}
+
+model CoSo {
+  MaCoSo      Int         @id @default(autoincrement())
+  TenCoSo     String      @db.VarChar(255)
+  SoDienThoai String?     @db.VarChar(20)
+  SoNhaDuong  String?     @db.VarChar(255)
+  PhuongXa    String?     @db.VarChar(100)
+  QuanHuyen   String?     @db.VarChar(100)
+  ThanhPho    String?     @db.VarChar(100)
+  KinhDo      Decimal?    @db.Decimal(11, 8)
+  ViDo        Decimal?    @db.Decimal(10, 8)
+  DonHang     DonHang[]
+  NguoiDung   NguoiDung[]
+}
+
+model Combo {
+  MaCombo        Int              @id @default(autoincrement())
+  TenCombo       String           @db.VarChar(255)
+  MoTa           String?
+  HinhAnh        String?          @db.VarChar(255)
+  GiaCombo       Decimal          @db.Decimal(10, 2)
+  TrangThai      String?          @default("Active") @db.VarChar(20)
+  NgayTao        DateTime?        @default(now()) @db.Timestamp(6)
+  NgayCapNhat    DateTime?        @default(now()) @db.Timestamp(6)
+  ThoiGianHetHan DateTime         @default(dbgenerated("'2999-12-31 23:59:59'::timestamp without time zone")) @db.Timestamp(6)
+  ChiTietDonHang ChiTietDonHang[]
+  Combo_ChiTiet  Combo_ChiTiet[]
+}
+
+model Combo_ChiTiet {
+  MaCTCombo    Int          @id @default(autoincrement())
+  MaCombo      Int
+  MaBienThe    Int
+  SoLuong      Int          @default(1)
+  MaDeBanh     Int?
+  BienTheMonAn BienTheMonAn @relation(fields: [MaBienThe], references: [MaBienThe], onDelete: NoAction, onUpdate: NoAction)
+  Combo        Combo        @relation(fields: [MaCombo], references: [MaCombo], onDelete: Cascade, onUpdate: NoAction)
+  DeBanh       DeBanh?      @relation(fields: [MaDeBanh], references: [MaDeBanh], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([MaCombo, MaBienThe], map: "Combo_ChiTiet_Unique")
+}
+
+model DanhGiaDonHang {
+  MaDanhGiaDonHang  Int                 @id(map: "DanhGia_pkey") @default(autoincrement())
+  MaDonHang         Int                 @unique(map: "DanhGia_MaDonHang_key")
+  SoSao             Int
+  BinhLuan          String?
+  NgayDanhGia       DateTime            @default(now()) @db.Timestamp(6)
+  AI_ReviewAnalysis AI_ReviewAnalysis[]
+  DonHang           DonHang             @relation(fields: [MaDonHang], references: [MaDonHang], onDelete: NoAction, onUpdate: NoAction, map: "DanhGia_MaDonHang_fkey")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model DanhGiaMonAn {
+  MaDanhGiaMonAn Int       @id @default(autoincrement())
+  MaMonAn        Int
+  MaTaiKhoan     Int
+  SoSao          Int       @db.SmallInt
+  NoiDung        String?
+  NgayDanhGia    DateTime? @default(now()) @db.Timestamp(6)
+  TrangThai      String?   @default("Chờ duyệt") @db.VarChar(20)
+  MonAn          MonAn     @relation(fields: [MaMonAn], references: [MaMonAn], onDelete: Cascade, onUpdate: NoAction)
+  TaiKhoan       TaiKhoan  @relation(fields: [MaTaiKhoan], references: [MaTaiKhoan], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model DanhMuc {
+  MaDanhMuc     Int             @id @default(autoincrement())
+  TenDanhMuc    String          @unique @db.VarChar(100)
+  MonAn_DanhMuc MonAn_DanhMuc[]
+}
+
+model DeBanh {
+  MaDeBanh                    Int                           @id @default(autoincrement())
+  TenDeBanh                   String                        @unique @db.VarChar(100)
+  ChiTietDonHang              ChiTietDonHang[]
+  ChiTietDonHang_ChiTietCombo ChiTietDonHang_ChiTietCombo[]
+  Combo_ChiTiet               Combo_ChiTiet[]
+  MonAn_DeBanh                MonAn_DeBanh[]
+}
+
+model DonHang {
+  MaDonHang                                        Int                      @id @default(autoincrement())
+  MaNguoiDung                                      Int?
+  MaCoSo                                           Int
+  MaNguoiDungGiaoHang                              Int?
+  MaVoucher                                        String?                  @db.VarChar(50)
+  NgayDat                                          DateTime                 @default(now()) @db.Timestamp(6)
+  ThoiGianGiaoDuKien                               DateTime?                @db.Timestamp(6)
+  TienTruocGiamGia                                 Decimal?                 @db.Decimal(10, 2)
+  TienGiamGia                                      Decimal?                 @db.Decimal(10, 2)
+  TongTien                                         Decimal                  @db.Decimal(10, 2)
+  GhiChu                                           String?
+  TenNguoiNhan                                     String?                  @db.VarChar(255)
+  SoDienThoaiGiaoHang                              String?                  @db.VarChar(20)
+  SoNhaDuongGiaoHang                               String?                  @db.VarChar(255)
+  PhuongXaGiaoHang                                 String?                  @db.VarChar(100)
+  QuanHuyenGiaoHang                                String?                  @db.VarChar(100)
+  ThanhPhoGiaoHang                                 String?                  @db.VarChar(100)
+  PhiShip                                          Decimal                  @default(0) @db.Decimal(10, 2)
+  ChiTietDonHang                                   ChiTietDonHang[]
+  DanhGiaDonHang                                   DanhGiaDonHang?
+  CoSo                                             CoSo                     @relation(fields: [MaCoSo], references: [MaCoSo], onDelete: NoAction, onUpdate: NoAction)
+  NguoiDung_DonHang_MaNguoiDungGiaoHangToNguoiDung NguoiDung?               @relation("DonHang_MaNguoiDungGiaoHangToNguoiDung", fields: [MaNguoiDungGiaoHang], references: [MaNguoiDung], onDelete: NoAction, onUpdate: NoAction)
+  NguoiDung_DonHang_MaNguoiDungToNguoiDung         NguoiDung?               @relation("DonHang_MaNguoiDungToNguoiDung", fields: [MaNguoiDung], references: [MaNguoiDung], onDelete: NoAction, onUpdate: NoAction)
+  Voucher                                          Voucher?                 @relation(fields: [MaVoucher], references: [MaVoucher], onDelete: NoAction, onUpdate: NoAction)
+  DonHang_QuaTang                                  DonHang_QuaTang[]
+  LichSuTrangThaiDonHang                           LichSuTrangThaiDonHang[]
+  ThanhToan                                        ThanhToan[]
+}
+
+model KhuyenMai {
+  MaKhuyenMai     Int               @id @default(autoincrement())
+  TenKhuyenMai    String            @db.VarChar(255)
+  MoTa            String?
+  KMLoai          String            @db.VarChar(20)
+  KMGiaTri        Decimal           @db.Decimal(10, 2)
+  KMBatDau        DateTime          @db.Timestamp(6)
+  KMKetThuc       DateTime          @db.Timestamp(6)
+  TrangThai       String?           @default("Active") @db.VarChar(20)
+  MonAn_KhuyenMai MonAn_KhuyenMai[]
+}
+
+model LichSuTrangThaiDonHang {
+  MaLichSu        Int      @id @default(autoincrement())
+  MaDonHang       Int
+  TrangThai       String   @db.VarChar(50)
+  ThoiGianCapNhat DateTime @default(now()) @db.Timestamp(6)
+  GhiChu          String?
+  DonHang         DonHang  @relation(fields: [MaDonHang], references: [MaDonHang], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model LoaiMonAn {
+  MaLoaiMonAn  Int     @id @default(autoincrement())
+  TenLoaiMonAn String  @unique @db.VarChar(100)
+  MonAn        MonAn[]
+}
+
+model LoaiTuyChon {
+  MaLoaiTuyChon  Int       @id @default(autoincrement())
+  TenLoaiTuyChon String    @unique @db.VarChar(100)
+  TuyChon        TuyChon[]
+}
+
+model MonAn {
+  MaMonAn         Int               @id @default(autoincrement())
+  TenMonAn        String            @db.VarChar(255)
+  MoTa            String?
+  HinhAnh         String?           @db.VarChar(255)
+  MaLoaiMonAn     Int
+  TrangThai       String?           @default("Active") @db.VarChar(20)
+  DeXuat          Boolean           @default(false)
+  BienTheMonAn    BienTheMonAn[]
+  DanhGiaMonAn    DanhGiaMonAn[]
+  LoaiMonAn       LoaiMonAn         @relation(fields: [MaLoaiMonAn], references: [MaLoaiMonAn], onDelete: NoAction, onUpdate: NoAction)
+  MonAn_DanhMuc   MonAn_DanhMuc[]
+  MonAn_DeBanh    MonAn_DeBanh[]
+  MonAn_KhuyenMai MonAn_KhuyenMai[]
+  MonAn_TuyChon   MonAn_TuyChon[]
+}
+
+model MonAn_DanhMuc {
+  MaMonAn   Int
+  MaDanhMuc Int
+  DanhMuc   DanhMuc @relation(fields: [MaDanhMuc], references: [MaDanhMuc], onDelete: NoAction, onUpdate: NoAction)
+  MonAn     MonAn   @relation(fields: [MaMonAn], references: [MaMonAn], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([MaMonAn, MaDanhMuc])
+}
+
+model MonAn_DeBanh {
+  MaMonAn  Int
+  MaDeBanh Int
+  DeBanh   DeBanh @relation(fields: [MaDeBanh], references: [MaDeBanh], onDelete: NoAction, onUpdate: NoAction)
+  MonAn    MonAn  @relation(fields: [MaMonAn], references: [MaMonAn], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([MaMonAn, MaDeBanh])
+}
+
+model MonAn_KhuyenMai {
+  MaMonAn     Int
+  MaKhuyenMai Int
+  KhuyenMai   KhuyenMai @relation(fields: [MaKhuyenMai], references: [MaKhuyenMai], onDelete: Cascade, onUpdate: NoAction, map: "fk_khuyenmai")
+  MonAn       MonAn     @relation(fields: [MaMonAn], references: [MaMonAn], onDelete: Cascade, onUpdate: NoAction, map: "fk_monan")
+
+  @@id([MaMonAn, MaKhuyenMai])
+}
+
+model MonAn_TuyChon {
+  MaMonAn   Int
+  MaTuyChon Int
+  MonAn     MonAn   @relation(fields: [MaMonAn], references: [MaMonAn], onDelete: NoAction, onUpdate: NoAction)
+  TuyChon   TuyChon @relation(fields: [MaTuyChon], references: [MaTuyChon], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([MaMonAn, MaTuyChon])
+}
+
+model NguoiDung {
+  MaNguoiDung                                    Int       @id @default(autoincrement())
+  MaCoSo                                         Int?
+  HoTen                                          String    @db.VarChar(255)
+  Email                                          String?   @unique @db.VarChar(100)
+  SoDienThoai                                    String?   @unique @db.VarChar(20)
+  SoNhaDuong                                     String?   @db.VarChar(255)
+  PhuongXa                                       String?   @db.VarChar(100)
+  QuanHuyen                                      String?   @db.VarChar(100)
+  ThanhPho                                       String?   @db.VarChar(100)
+  Role                                           String?   @db.VarChar(50)
+  DonHang_DonHang_MaNguoiDungGiaoHangToNguoiDung DonHang[] @relation("DonHang_MaNguoiDungGiaoHangToNguoiDung")
+  DonHang_DonHang_MaNguoiDungToNguoiDung         DonHang[] @relation("DonHang_MaNguoiDungToNguoiDung")
+  CoSo                                           CoSo?     @relation(fields: [MaCoSo], references: [MaCoSo], onDelete: NoAction, onUpdate: NoAction)
+  TaiKhoan                                       TaiKhoan[]
+}
+
+model Size {
+  MaSize       Int            @id @default(autoincrement())
+  TenSize      String         @unique @db.VarChar(50)
+  BienTheMonAn BienTheMonAn[]
+  TuyChon_Gia  TuyChon_Gia[]
+}
+
+model TaiKhoan {
+  MaTaiKhoan   Int            @id @default(autoincrement())
+  MaNguoiDung  Int?
+  MatKhau      String         @db.VarChar(255)
+  Provider     String?        @default("local") @db.VarChar(50)
+  providerId   String?        @db.VarChar(255)
+  IsActived    Boolean        @default(true)
+  TrangThai    String         @default("Active") @db.VarChar(20)
+  DanhGiaMonAn DanhGiaMonAn[]
+  NguoiDung    NguoiDung?     @relation(fields: [MaNguoiDung], references: [MaNguoiDung], onDelete: NoAction, onUpdate: NoAction)
+  RefreshTokens RefreshToken[]
+
+  @@index([MaNguoiDung], map: "TaiKhoan_MaNguoiDung_idx")
+}
+
+model RefreshToken {
+  id           Int      @id @default(autoincrement())
+  token        String   @db.VarChar(512)
+  maTaiKhoan   Int
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+  TaiKhoan     TaiKhoan @relation(fields: [maTaiKhoan], references: [MaTaiKhoan], onDelete: Cascade)
+
+  @@index([maTaiKhoan])
+}
+
+model ThanhToan {
+  MaThanhToan Int      @id @default(autoincrement())
+  MaDonHang   Int?
+  PhuongThuc  String   @db.VarChar(50)
+  MaGiaoDich  String?  @unique @db.VarChar(255)
+  SoTien      Decimal  @db.Decimal(10, 2)
+  TrangThai   String   @db.VarChar(50)
+  ThoiGian    DateTime @default(now()) @db.Timestamp(6)
+  DonHang     DonHang? @relation(fields: [MaDonHang], references: [MaDonHang], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model TuyChon {
+  MaTuyChon              Int                      @id @default(autoincrement())
+  TenTuyChon             String                   @db.VarChar(100)
+  MaLoaiTuyChon          Int
+  TrangThai              String                   @default("Active") @db.VarChar(10)
+  ChiTietDonHang_TuyChon ChiTietDonHang_TuyChon[]
+  MonAn_TuyChon          MonAn_TuyChon[]
+  LoaiTuyChon            LoaiTuyChon              @relation(fields: [MaLoaiTuyChon], references: [MaLoaiTuyChon], onDelete: NoAction, onUpdate: NoAction)
+  TuyChon_Gia            TuyChon_Gia[]
+}
+
+model TuyChon_Gia {
+  MaTuyChon Int
+  MaSize    Int
+  GiaThem   Decimal @default(0) @db.Decimal(10, 2)
+  Size      Size    @relation(fields: [MaSize], references: [MaSize], onDelete: NoAction, onUpdate: NoAction)
+  TuyChon   TuyChon @relation(fields: [MaTuyChon], references: [MaTuyChon], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([MaTuyChon, MaSize])
+}
+
+model Voucher {
+  MaVoucher      String    @id @db.VarChar(50)
+  MoTa           String
+  LoaiGiamGia    String    @db.VarChar(20)
+  GiaTri         Decimal   @db.Decimal(10, 2)
+  DieuKienApDung Decimal?  @default(0) @db.Decimal(10, 2)
+  NgayBatDau     DateTime? @db.Timestamp(6)
+  NgayKetThuc    DateTime? @db.Timestamp(6)
+  SoLuong        Int?
+  TrangThai      String    @default("Active") @db.VarChar(20)
+  DonHang        DonHang[]
+}
+
+model DonHang_QuaTang {
+  MaDonHang Int
+  MaQuaTang Int
+  SoLuong   Int?    @default(1)
+  DonHang   DonHang @relation(fields: [MaDonHang], references: [MaDonHang], onDelete: NoAction, onUpdate: NoAction, map: "FK_DonHang_QuaTang_DonHang")
+  QuaTang   QuaTang @relation(fields: [MaQuaTang], references: [MaQuaTang], onDelete: NoAction, onUpdate: NoAction, map: "FK_DonHang_QuaTang_QuaTang")
+
+  @@id([MaDonHang, MaQuaTang])
+}
+
+model QuaTang {
+  MaQuaTang       Int               @id @default(autoincrement())
+  TenQuaTang      String            @db.VarChar(255)
+  MoTa            String?
+  HinhAnh         String?           @db.VarChar(255)
+  CapDo           String            @db.VarChar(50)
+  TyLeXuatHien    Decimal?          @db.Decimal(5, 2)
+  TrangThai       String?           @default("Active") @db.VarChar(20)
+  DonHang_QuaTang DonHang_QuaTang[]
+}
+
+model AI_ReviewAnalysis {
+  AnalysisID       Int            @id @default(autoincrement())
+  MaDanhGiaDonHang Int
+  Sentiment        String?        @db.VarChar(20)
+  Severity         String?        @db.VarChar(20)
+  FoodIssue        String?
+  DriverIssue      String?
+  StoreIssue       String?
+  OtherIssue       String?
+  MentionLate      Boolean?
+  RawJSON          Json?
+  NgayPhanTich     DateTime?      @default(now()) @db.Timestamp(6)
+  DanhGiaDonHang   DanhGiaDonHang @relation(fields: [MaDanhGiaDonHang], references: [MaDanhGiaDonHang], onDelete: Cascade, onUpdate: NoAction, map: "fk_review")
+}

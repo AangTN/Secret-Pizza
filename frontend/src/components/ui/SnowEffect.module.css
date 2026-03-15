@@ -1,0 +1,30 @@
+.snow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.flake {
+  position: absolute;
+  top: -10vh;
+  color: rgba(255, 255, 255, 0.9);
+  animation-name: snow-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+@keyframes snow-fall {
+  0% {
+    transform: translate3d(0, -10vh, 0);
+  }
+  50% {
+    transform: translate3d(calc(var(--drift, 0px) / 2), 50vh, 0);
+  }
+  100% {
+    transform: translate3d(var(--drift, 0px), 110vh, 0);
+    opacity: 0;
+  }
+}

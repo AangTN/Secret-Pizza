@@ -1,0 +1,376 @@
+/* Admin Table Card Component Styles */
+
+/* Base Card Styles */
+.card {
+  background: var(--admin-bg-primary);
+  border: 1px solid var(--admin-border-light);
+  border-radius: var(--admin-radius-lg);
+  box-shadow: var(--admin-shadow-sm);
+  transition: var(--admin-transition-base);
+  overflow: hidden;
+  position: relative;
+}
+
+.card:hover {
+  box-shadow: var(--admin-shadow-md);
+  transform: translateY(-2px);
+  border-color: var(--admin-primary-light);
+}
+
+/* Card Variants */
+.cardPrimary {
+  border-color: var(--admin-primary);
+  background: linear-gradient(135deg, var(--admin-bg-primary) 0%, #fff5f5 100%);
+}
+
+.cardPrimary:hover {
+  border-color: var(--admin-primary-dark);
+  box-shadow: 0 8px 25px rgba(255, 77, 79, 0.15);
+}
+
+.cardSuccess {
+  border-color: var(--admin-success);
+  background: linear-gradient(135deg, var(--admin-bg-primary) 0%, #f6ffed 100%);
+}
+
+.cardSuccess:hover {
+  border-color: #389e0d;
+  box-shadow: 0 8px 25px rgba(82, 196, 26, 0.15);
+}
+
+.cardWarning {
+  border-color: var(--admin-warning);
+  background: linear-gradient(135deg, var(--admin-bg-primary) 0%, #fffbe6 100%);
+}
+
+.cardWarning:hover {
+  border-color: #d48806;
+  box-shadow: 0 8px 25px rgba(250, 173, 20, 0.15);
+}
+
+.cardInfo {
+  border-color: var(--admin-info);
+  background: linear-gradient(135deg, var(--admin-bg-primary) 0%, #e6f7ff 100%);
+}
+
+.cardInfo:hover {
+  border-color: var(--admin-secondary-dark);
+  box-shadow: 0 8px 25px rgba(24, 144, 255, 0.15);
+}
+/* Review Card Variant */
+.cardReview {
+  border-color: var(--admin-info);
+  background: linear-gradient(135deg, var(--admin-bg-primary) 0%, #f9f0ff 100%);
+}
+
+.cardReview:hover {
+  border-color: #722ed1;
+  box-shadow: 0 8px 25px rgba(114, 46, 209, 0.15);
+}
+
+
+/* Card Header Styles */
+.cardHeader {
+  padding: var(--admin-space-lg);
+  border-bottom: 1px solid var(--admin-border-light);
+  background: var(--admin-bg-secondary);
+}
+
+.cardHeaderPremium {
+  padding: var(--admin-space-lg);
+  border-bottom: 1px solid var(--admin-border-light);
+  background: linear-gradient(135deg, var(--admin-bg-secondary) 0%, var(--admin-bg-tertiary) 100%);
+}
+
+.cardHeaderBorderless {
+  padding: var(--admin-space-lg);
+  background: transparent;
+}
+
+/* Card Title Styles */
+.cardTitle {
+  font-size: var(--admin-font-size-lg);
+  font-weight: var(--admin-font-weight-bold);
+  color: var(--admin-text-primary);
+  margin: 0;
+  line-height: var(--admin-line-height-tight);
+}
+
+.cardTitleLarge {
+  font-size: var(--admin-font-size-xl);
+  font-weight: var(--admin-font-weight-bold);
+  color: var(--admin-text-primary);
+  margin: 0;
+  line-height: var(--admin-line-height-tight);
+}
+
+.cardSubtitle {
+  font-size: var(--admin-font-size-sm);
+  color: var(--admin-text-secondary);
+  margin: var(--admin-space-xs) 0 0 0;
+  line-height: var(--admin-line-height-normal);
+}
+
+/* Card Body Styles */
+.cardBody {
+  padding: var(--admin-space-lg);
+}
+
+.cardBodyCompact {
+  padding: var(--admin-space-md);
+}
+
+.cardBodySpacious {
+  padding: var(--admin-space-xl);
+}
+
+.cardContent {
+  color: var(--admin-text-primary);
+  line-height: var(--admin-line-height-normal);
+}
+
+.cardContentSecondary {
+  color: var(--admin-text-secondary);
+  font-size: var(--admin-font-size-sm);
+  line-height: var(--admin-line-height-normal);
+}
+
+/* Card Footer Styles */
+.cardFooter {
+  padding: var(--admin-space-lg);
+  border-top: 1px solid var(--admin-border-light);
+  background: var(--admin-bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cardFooterBorderless {
+  padding: var(--admin-space-lg);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Card with Stats */
+.cardStats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--admin-space-md);
+}
+
+.cardStatValue {
+  font-size: var(--admin-font-size-3xl);
+  font-weight: var(--admin-font-weight-extrabold);
+  color: var(--admin-text-primary);
+  line-height: var(--admin-line-height-tight);
+}
+
+.cardStatLabel {
+  font-size: var(--admin-font-size-sm);
+  color: var(--admin-text-secondary);
+  font-weight: var(--admin-font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cardStatIcon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--admin-radius-lg);
+  font-size: 24px;
+}
+
+.cardStatIconPrimary {
+  background: linear-gradient(135deg, var(--admin-primary) 0%, var(--admin-primary-light) 100%);
+  color: var(--admin-white);
+}
+
+.cardStatIconSuccess {
+  background: linear-gradient(135deg, var(--admin-success) 0%, #73d13d 100%);
+  color: var(--admin-white);
+}
+
+.cardStatIconWarning {
+  background: linear-gradient(135deg, var(--admin-warning) 0%, #ffc53d 100%);
+  color: var(--admin-white);
+}
+
+.cardStatIconInfo {
+  background: linear-gradient(135deg, var(--admin-info) 0%, var(--admin-secondary-light) 100%);
+  color: var(--admin-white);
+}
+
+/* Card Variants */
+.cardSmall {
+  border-radius: var(--admin-radius-md);
+}
+
+.cardLarge {
+  border-radius: var(--admin-radius-xl);
+}
+
+/* Interactive Cards */
+.cardClickable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.cardClickable:active {
+  transform: translateY(-1px);
+  box-shadow: var(--admin-shadow-sm);
+}
+
+.cardDraggable {
+  cursor: move;
+}
+
+.cardDraggable:hover {
+  box-shadow: var(--admin-shadow-lg);
+  border-color: var(--admin-primary);
+}
+
+/* Loading State */
+.cardLoading {
+  position: relative;
+  overflow: hidden;
+}
+
+.cardLoading::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.6),
+    transparent
+  );
+  animation: cardShimmer 1.5s infinite;
+}
+
+@keyframes cardShimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Animation Classes */
+.cardAnimateIn {
+  animation: admin-scale-in var(--admin-transition-base) ease-out;
+}
+
+.cardAnimateHover {
+  transition: all var(--admin-transition-slow) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cardAnimateHover:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--admin-shadow-xl);
+}
+
+/* Focus Styles for Accessibility */
+.cardFocusable:focus {
+  outline: 2px solid var(--admin-primary);
+  outline-offset: 2px;
+}
+
+.cardFocusable:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Button Styles */
+.btn {
+  padding: var(--admin-space-xs);
+  border-radius: var(--admin-radius-sm);
+  font-size: var(--admin-font-size-sm);
+  font-weight: var(--admin-font-weight-medium);
+  border: none;
+  background: var(--admin-primary);
+  color: var(--admin-white);
+  cursor: pointer;
+  transition: var(--admin-transition-base);
+}
+
+.btn:hover {
+  background: var(--admin-primary-light);
+}
+
+.btn-primary {
+  background: var(--admin-primary);
+}
+
+.btn-success {
+  background: var(--admin-success);
+}
+
+.btn-warning {
+  background: var(--admin-warning);
+}
+
+.btn-danger {
+  background: var(--admin-error);
+}
+
+/* Badge Styles */
+.badge {
+  padding: 2px 6px;
+  border-radius: var(--admin-radius-sm);
+  font-size: var(--admin-font-size-xs);
+  font-weight: var(--admin-font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--admin-primary);
+  color: var(--admin-white);
+}
+
+.bg-success {
+  background: var(--admin-success);
+}
+
+.bg-warning {
+  background: var(--admin-warning);
+}
+
+.bg-error {
+  background: var(--admin-error);
+}
+
+.bg-primary {
+  background: var(--admin-primary);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .card {
+    border-radius: var(--admin-radius-md);
+    margin-bottom: var(--admin-space-md);
+  }
+  
+  .cardHeader,
+  .cardBody,
+  .cardFooter {
+    padding: var(--admin-space-md);
+  }
+  
+  .cardStatValue {
+    font-size: var(--admin-font-size-2xl);
+  }
+  
+  .cardStatIcon {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+}

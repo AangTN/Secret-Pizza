@@ -1,0 +1,159 @@
+.footer {
+  background: linear-gradient(135deg, #0a3d20 0%, #05120b 100%);
+  color: #e2e8f0;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(2px 2px at 20% 30%, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(2px 2px at 60% 70%, rgba(255, 255, 255, 0.35), transparent),
+    radial-gradient(1px 1px at 50% 50%, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 80% 10%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(2px 2px at 90% 60%, rgba(255, 255, 255, 0.35), transparent),
+    radial-gradient(1px 1px at 33% 80%, rgba(255, 255, 255, 0.3), transparent);
+  background-size: 200% 200%;
+  animation: twinkleStar 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.footer::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: radial-gradient(ellipse at bottom, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+@keyframes twinkleStar {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+
+.footer a {
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  font-weight: 500;
+}
+
+.footer a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #f8b229 0%, #d42426 100%);
+  transition: width 0.3s ease;
+  box-shadow: 0 0 8px rgba(248, 178, 41, 0.6);
+}
+
+.footer a:hover {
+  color: #f8b229;
+  transform: translateX(5px);
+  text-shadow: 0 2px 8px rgba(248, 178, 41, 0.4);
+}
+
+.footer a:hover::after {
+  width: 100%;
+}
+
+.footerTitle {
+  color: #f8b229;
+  font-weight: 800;
+  font-size: 1.15rem;
+  margin-bottom: 1rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+  text-shadow: 0 2px 8px rgba(248, 178, 41, 0.3);
+}
+
+.footerTitle::before {
+  content: '🎄';
+  margin-right: 0.5rem;
+  font-size: 1rem;
+}
+
+.footerTitle::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #f8b229 0%, #d42426 50%, transparent 100%);
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(248, 178, 41, 0.4);
+}
+
+.copy {
+  border-top: 2px solid rgba(248, 178, 41, 0.2);
+  margin-top: 2rem;
+  padding-top: 2rem;
+  color: #94a3b8;
+  background: linear-gradient(90deg, transparent 0%, rgba(248, 178, 41, 0.05) 50%, transparent 100%);
+  border-radius: 8px;
+  padding: 1.5rem 0;
+}
+
+.socialLinks a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: rgba(248, 178, 41, 0.1);
+  border: 2px solid rgba(248, 178, 41, 0.3);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.socialLinks a:hover {
+  background: linear-gradient(135deg, #d42426 0%, #a61b1e 100%);
+  border-color: #f8b229;
+  transform: translateY(-5px) scale(1.15) rotate(10deg);
+  box-shadow: 0 8px 24px rgba(248, 178, 41, 0.4);
+}
+
+.socialLinks a::after {
+  display: none;
+}
+
+.logoSection {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.logoSection::before {
+  content: '✨';
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-size: 1.5rem;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+.logoSection img {
+  filter: drop-shadow(0 4px 12px rgba(248, 178, 41, 0.5));
+  transition: transform 0.3s ease;
+}
+
+.logoSection:hover img {
+  transform: scale(1.05);
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.2); }
+}

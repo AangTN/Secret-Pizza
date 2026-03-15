@@ -1,0 +1,253 @@
+/* =========================================
+   Christmas Header Navigation
+   Theme: Festive String Lights & Snowflakes
+   ========================================= */
+
+.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(5, 21, 32, 0.15);
+}
+
+.navBar {
+  background: linear-gradient(135deg, #020b14 0%, #0a3d20 100%) !important;
+  padding: 0.75rem 0;
+  position: relative;
+  border-bottom: 2px solid #0f2f1d;
+}
+
+.navBar::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 100%;
+  height: 12px;
+  background-image: 
+    radial-gradient(circle at 50% 40%, #ff3b3b 4px, transparent 5px),
+    radial-gradient(circle at 50% 40%, #ffd700 4px, transparent 5px),
+    radial-gradient(circle at 50% 40%, #00ff00 4px, transparent 5px),
+    radial-gradient(circle at 50% 40%, #00bfff 4px, transparent 5px);
+  background-position: 
+    0 0,
+    20px 0,
+    40px 0,
+    60px 0;
+  background-size: 80px 100%;
+  background-repeat: repeat-x;
+  filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.4));
+  z-index: 1001;
+  animation: lightsBlink 2s infinite alternate;
+}
+
+@keyframes lightsBlink {
+  0% { filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.4)) brightness(1); }
+  100% { filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.8)) brightness(1.3); }
+}
+
+.navBar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 15% 25%, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 85% 65%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 45% 8%, rgba(255, 255, 255, 0.35), transparent);
+  background-size: 200% 200%;
+  animation: twinkle 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* Brand/Logo */
+.brand {
+  font-weight: 800 !important;
+  font-size: 1.5rem !important;
+  color: #f8b229 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  text-shadow: 0 3px 12px rgba(248, 178, 41, 0.5);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.brand::before {
+  content: '❄️';
+  font-size: 1.3rem;
+  animation: snowSpin 4s linear infinite;
+}
+
+.brand::after {
+  content: '🎅';
+  font-size: 1rem;
+  position: absolute;
+  right: -25px;
+  top: -8px;
+}
+
+@keyframes snowSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.brand:hover {
+  transform: scale(1.05);
+  color: #fff !important;
+}
+
+.brand img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 3px solid #f8b229;
+  box-shadow: 0 4px 16px rgba(248, 178, 41, 0.4);
+}
+
+/* Navigation Links */
+.navLink {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 600 !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 12px !important;
+  transition: all 0.3s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem;
+}
+
+.navLink:hover {
+  color: #f8b229 !important;
+  background: rgba(248, 178, 41, 0.15) !important;
+  transform: translateY(-2px);
+}
+
+.navLink.active {
+  color: #f8b229 !important;
+  background: rgba(248, 178, 41, 0.2) !important;
+}
+
+/* Cart Icon */
+.cartIcon {
+  color: #fff !important;
+  font-weight: 700 !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 12px !important;
+  transition: all 0.3s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #d42426, #a61b1e) !important;
+  border: 2px solid #f8b229 !important;
+  box-shadow: 0 4px 16px rgba(212, 36, 38, 0.4);
+}
+
+.cartIcon:hover {
+  background: linear-gradient(135deg, #a61b1e, #7d1416) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(212, 36, 38, 0.5);
+}
+
+.cartBadge {
+  background-color: #f8b229 !important;
+  color: #020b14 !important;
+  font-weight: 800 !important;
+  font-size: 0.75rem !important;
+  padding: 0.3rem 0.5rem !important;
+  border-radius: 10px !important;
+}
+
+/* User Dropdown */
+.userDropdown button {
+  color: #fff !important;
+  font-weight: 600 !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 12px !important;
+  transition: all 0.3s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem;
+  background: rgba(22, 91, 51, 0.3) !important;
+  border: 2px solid rgba(22, 91, 51, 0.5) !important;
+}
+
+.userDropdown button:hover {
+  background: rgba(22, 91, 51, 0.5) !important;
+  border-color: #165b33 !important;
+  transform: translateY(-2px);
+}
+
+.userDropdown button::after {
+  margin-left: 0.5rem;
+}
+
+/* Login Button */
+.loginButton {
+  color: #020b14 !important;
+  background: #f8b229 !important;
+  font-weight: 700 !important;
+  padding: 0.5rem 1.25rem !important;
+  border-radius: 12px !important;
+  border: none !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 16px rgba(248, 178, 41, 0.4);
+}
+
+.loginButton:hover {
+  background: #f39c12 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(248, 178, 41, 0.5);
+}
+
+/* Dropdown Menu */
+:global(.dropdown-menu) {
+  border-radius: 16px !important;
+  border: 2px solid rgba(22, 91, 51, 0.2) !important;
+  box-shadow: 0 12px 40px rgba(5, 21, 32, 0.2) !important;
+  padding: 0.75rem !important;
+}
+
+:global(.dropdown-item) {
+  border-radius: 10px !important;
+  padding: 0.6rem 1rem !important;
+  transition: all 0.2s ease !important;
+}
+
+:global(.dropdown-item:hover) {
+  background: rgba(248, 178, 41, 0.15) !important;
+  color: #165b33 !important;
+}
+
+/* Navbar Toggle (mobile) */
+:global(.navbar-toggler) {
+  border-color: #f8b229 !important;
+  padding: 0.5rem 0.75rem !important;
+}
+
+:global(.navbar-toggler-icon) {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23f8b229' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+  .navBar {
+    padding: 0.5rem 0;
+  }
+  
+  .brand {
+    font-size: 1.3rem !important;
+  }
+  
+  .brand::after {
+    right: -20px;
+  }
+  
+  .navLink {
+    margin: 0.25rem 0;
+  }
+}

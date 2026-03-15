@@ -1,0 +1,264 @@
+/* Checkout Page Modern Styling */
+
+.checkoutContainer {
+  background: var(--background);
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+
+.pageTitle {
+  color: var(--text-primary);
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.formCard {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-2);
+  border: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+.sectionTitle {
+  color: var(--text-primary);
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--primary);
+}
+
+.formLabel {
+  color: var(--text-primary);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.formControl {
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  transition: all var(--transition);
+  font-size: 0.95rem;
+  background: var(--surface);
+}
+
+.formControl:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.15);
+  outline: none;
+}
+
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.radioOption {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition);
+  background: var(--surface);
+}
+
+.radioOption:hover {
+  border-color: var(--primary);
+  background: rgba(230, 57, 70, 0.03);
+}
+
+.radioOption input[type="radio"]:checked + label,
+.radioOption.selected {
+  border-color: var(--primary);
+  background: rgba(230, 57, 70, 0.05);
+  box-shadow: var(--shadow-2);
+}
+
+.radioOption input[type="radio"] {
+  accent-color: var(--primary);
+  width: 20px;
+  height: 20px;
+}
+
+.orderSummary {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-3);
+  position: sticky;
+  top: 100px;
+}
+
+.summaryTitle {
+  color: var(--text-primary);
+  font-weight: 800;
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 1rem;
+}
+
+.orderItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px dashed var(--border);
+  color: var(--text-secondary);
+}
+
+.itemName {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.itemPrice {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.voucherInput {
+  display: flex;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}
+
+.voucherInput input {
+  flex: 1;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+}
+
+.voucherInput input:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.15);
+}
+
+.applyVoucherBtn {
+  background: var(--primary) !important;
+  color: white !important;
+  border: none !important;
+  font-weight: 700 !important;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: var(--radius-md) !important;
+  transition: all var(--transition);
+}
+
+.applyVoucherBtn:hover {
+  background: var(--primary-dark) !important;
+  transform: translateY(-2px);
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.summaryTotal {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--primary);
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid var(--border);
+}
+
+.summaryTotal::after {
+  content: '🎁';
+  margin-left: 0.5rem;
+}
+
+.placeOrderBtn {
+  width: 100%;
+  background: linear-gradient(120deg, #d42426 0%, #a61b1e 100%) !important;
+  border: 2px solid #f8b229 !important;
+  color: white !important;
+  font-weight: 800 !important;
+  font-size: 1.2rem !important;
+  padding: 1.2rem !important;
+  border-radius: 12px !important;
+  text-transform: uppercase;
+  box-shadow: 0 8px 24px rgba(212, 36, 38, 0.35);
+  transition: all 0.3s ease;
+  margin-top: 1.5rem;
+  animation: pulse 2s infinite;
+}
+
+.placeOrderBtn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 36px rgba(248, 178, 41, 0.45);
+  background: linear-gradient(120deg, #a61b1e 0%, #d42426 100%) !important;
+  animation: none;
+}
+
+.placeOrderBtn::after {
+  content: ' 🎁';
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 8px 24px rgba(212, 36, 38, 0.35);
+  }
+  50% {
+    box-shadow: 0 12px 32px rgba(212, 36, 38, 0.5);
+  }
+}
+
+.alert {
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.alertSuccess {
+  background: rgba(22, 91, 51, 0.1);
+  border: 2px solid #165b33;
+  color: #0f4525;
+}
+
+.alertSuccess::before {
+  content: '🎄 ';
+}
+
+.alertError {
+  background: rgba(212, 36, 38, 0.1);
+  border: 2px solid #d42426;
+  color: #a61b1e;
+}
+
+.alertError::before {
+  content: '⛄ ';
+}
+
+@media (max-width: 768px) {
+  .orderSummary {
+    position: static;
+    margin-top: 2rem;
+  }
+  
+  .formCard {
+    padding: 1.5rem;
+  }
+}
