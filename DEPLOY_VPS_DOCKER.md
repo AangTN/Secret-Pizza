@@ -17,7 +17,7 @@ cp .env.example .env
 Important values:
 
 - `backend/.env`: JWT secrets, `FRONTEND_URL`, `CORS_ORIGINS`, email/oauth keys
-- `.env`: `FRONTEND_PORT`, `DB_PORT`, `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`
+- `.env`: `HTTP_PORT`, `HTTPS_PORT`, `SSL_CERT_PATH`, `SSL_KEY_PATH`, `DB_PORT`, `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`
 - Optional in `.env`: `DATABASE_URL` (if you need a custom DB connection string)
 - Frontend build values in `.env`: `VITE_API_BASE_URL`, optional map/google client variables
 
@@ -33,8 +33,9 @@ If DB already has tables, import is skipped.
 
 ## 3. Verify
 
-- Frontend: `http://YOUR_HOST_OR_DOMAIN`
-- Backend health: `http://YOUR_HOST_OR_DOMAIN/api/health`
+- Frontend (HTTPS): `https://YOUR_HOST_OR_DOMAIN`
+- HTTP redirect check: `http://YOUR_HOST_OR_DOMAIN` (should redirect to HTTPS)
+- Backend health: `https://YOUR_HOST_OR_DOMAIN/api/health`
 - DB container: `docker compose ps db`
 - DB seed logs: `docker compose logs --tail 50 db-seed`
 

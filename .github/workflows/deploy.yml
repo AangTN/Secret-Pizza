@@ -75,7 +75,10 @@ jobs:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           DB_PORT: ${{ secrets.DB_PORT }}
-          FRONTEND_PORT: ${{ secrets.FRONTEND_PORT }}
+          HTTP_PORT: ${{ secrets.HTTP_PORT }}
+          HTTPS_PORT: ${{ secrets.HTTPS_PORT }}
+          SSL_CERT_PATH: ${{ secrets.SSL_CERT_PATH }}
+          SSL_KEY_PATH: ${{ secrets.SSL_KEY_PATH }}
           VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
           VITE_MAP_KEY: ${{ secrets.VITE_MAP_KEY }}
           VITE_CLIENT_ID: ${{ secrets.CLIENT_ID }}
@@ -85,7 +88,7 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           port: ${{ secrets.VPS_PORT != '' && secrets.VPS_PORT || '22' }}
           # Liệt kê lại các biến để Action truyền qua SSH
-          envs: MAPS_API_KEY,VNP_TMNCODE,VNP_HASH_SECRET,VNP_URL,VNP_API,VNP_RETURN_URL,FRONTEND_URL,EMAIL_USER,EMAIL_PASS,REFRESH_TOKEN,ACCESS_TOKEN,CLIENT_ID,CLIENT_SECRET,POSTGRES_DB,POSTGRES_USER,POSTGRES_PASSWORD,DB_PORT,FRONTEND_PORT,VITE_API_BASE_URL,VITE_MAP_KEY,VITE_CLIENT_ID
+          envs: MAPS_API_KEY,VNP_TMNCODE,VNP_HASH_SECRET,VNP_URL,VNP_API,VNP_RETURN_URL,FRONTEND_URL,EMAIL_USER,EMAIL_PASS,REFRESH_TOKEN,ACCESS_TOKEN,CLIENT_ID,CLIENT_SECRET,POSTGRES_DB,POSTGRES_USER,POSTGRES_PASSWORD,DB_PORT,HTTP_PORT,HTTPS_PORT,SSL_CERT_PATH,SSL_KEY_PATH,VITE_API_BASE_URL,VITE_MAP_KEY,VITE_CLIENT_ID
           script_stop: true
           script: |
             set -e
@@ -96,7 +99,10 @@ jobs:
             POSTGRES_USER="${POSTGRES_USER:-secretpizza}"
             POSTGRES_PASSWORD="${POSTGRES_PASSWORD:-secretpizza}"
             DB_PORT="${DB_PORT:-5433}"
-            FRONTEND_PORT="${FRONTEND_PORT:-8081}"
+            HTTP_PORT="${HTTP_PORT:-80}"
+            HTTPS_PORT="${HTTPS_PORT:-443}"
+            SSL_CERT_PATH="${SSL_CERT_PATH:-/etc/letsencrypt/live/secretpizza.io.vn/fullchain.pem}"
+            SSL_KEY_PATH="${SSL_KEY_PATH:-/etc/letsencrypt/live/secretpizza.io.vn/privkey.pem}"
             DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}"
             VITE_CLIENT_ID="${VITE_CLIENT_ID:-$CLIENT_ID}"
 
@@ -111,8 +117,8 @@ jobs:
             git pull origin main
 
             # Root .env cho docker compose (db creds + build args)
-            printf "POSTGRES_DB=\"%s\"\nPOSTGRES_USER=\"%s\"\nPOSTGRES_PASSWORD=\"%s\"\nDB_PORT=\"%s\"\nFRONTEND_PORT=\"%s\"\nDATABASE_URL=\"%s\"\nVITE_API_BASE_URL=\"%s\"\nVITE_MAP_KEY=\"%s\"\nVITE_CLIENT_ID=\"%s\"\n" \
-              "$POSTGRES_DB" "$POSTGRES_USER" "$POSTGRES_PASSWORD" "$DB_PORT" "$FRONTEND_PORT" "$DATABASE_URL" "$VITE_API_BASE_URL" "$VITE_MAP_KEY" "$VITE_CLIENT_ID" > .env
+            printf "POSTGRES_DB=\"%s\"\nPOSTGRES_USER=\"%s\"\nPOSTGRES_PASSWORD=\"%s\"\nDB_PORT=\"%s\"\nHTTP_PORT=\"%s\"\nHTTPS_PORT=\"%s\"\nSSL_CERT_PATH=\"%s\"\nSSL_KEY_PATH=\"%s\"\nDATABASE_URL=\"%s\"\nVITE_API_BASE_URL=\"%s\"\nVITE_MAP_KEY=\"%s\"\nVITE_CLIENT_ID=\"%s\"\n" \
+              "$POSTGRES_DB" "$POSTGRES_USER" "$POSTGRES_PASSWORD" "$DB_PORT" "$HTTP_PORT" "$HTTPS_PORT" "$SSL_CERT_PATH" "$SSL_KEY_PATH" "$DATABASE_URL" "$VITE_API_BASE_URL" "$VITE_MAP_KEY" "$VITE_CLIENT_ID" > .env
 
             # Sử dụng printf để ghi file .env (Sạch sẽ, không dính rác hệ thống)
             printf "DATABASE_URL=\"%s\"\nMAPS_API_KEY=\"%s\"\nVNP_TMNCODE=\"%s\"\nVNP_HASH_SECRET=\"%s\"\nVNP_URL=\"%s\"\nVNP_API=\"%s\"\nVNP_RETURN_URL=\"%s\"\nFRONTEND_URL=\"%s\"\nEMAIL_USER=\"%s\"\nEMAIL_PASS=\"%s\"\nREFRESH_TOKEN=\"%s\"\nACCESS_TOKEN=\"%s\"\nCLIENT_ID=\"%s\"\nCLIENT_SECRET=\"%s\"\n" \
