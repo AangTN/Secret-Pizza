@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Container, Row, Col, Button, Spinner, Carousel } from 'react-bootstrap';
+import { Container, Row, Col, Button, Spinner, Carousel, Modal } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { CupStraw, Gift, CupHot, Lightning, Star, Handbag, Cup, Basket } from 'react-bootstrap-icons';
 import ProductCard from '../components/ui/ProductCard';
@@ -139,6 +139,27 @@ const HomePage = () => {
   const [activeBannerIndex, setActiveBannerIndex] = useState(0);
   const [activeComboIndex, setActiveComboIndex] = useState(0);
   const [countdown, setCountdown] = useState({ hours: '00', minutes: '00', seconds: '00' });
+  const [showProjectNotice, setShowProjectNotice] = useState(false);
+
+  const handleCloseProjectNotice = () => {
+    setShowProjectNotice(false);
+    try {
+      sessionStorage.setItem('secret-pizza-project-notice-seen', '1');
+    } catch {
+      // Ignore storage failures (private mode, browser restrictions)
+    }
+  };
+
+  useEffect(() => {
+    try {
+      const hasSeenNotice = sessionStorage.getItem('secret-pizza-project-notice-seen') === '1';
+      if (!hasSeenNotice) {
+        setShowProjectNotice(true);
+      }
+    } catch {
+      setShowProjectNotice(true);
+    }
+  }, []);
 
   useEffect(() => {
     let mounted = true;
@@ -264,6 +285,20 @@ const HomePage = () => {
 
   return (
     <>
+      <Modal show={showProjectNotice} onHide={handleCloseProjectNotice} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Thông báo</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Đây là website đồ án môn học, không phải website thương mại thật. Mọi thông tin/đặt hàng trên hệ thống chỉ phục vụ mục đích học tập và demo.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={handleCloseProjectNotice}>
+            Tôi đã hiểu
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       <section className={styles.heroCinematic}>
         <div className={styles.heroMedia}>
           <video
