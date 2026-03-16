@@ -58,7 +58,6 @@ jobs:
         uses: appleboy/ssh-action@v1.2.0
         # PHẦN QUAN TRỌNG: Map toàn bộ Secret vào môi trường của Action
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
           MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
           VNP_TMNCODE: ${{ secrets.VNP_TMNCODE }}
           VNP_HASH_SECRET: ${{ secrets.VNP_HASH_SECRET }}
@@ -72,20 +71,34 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          FRONTEND_PORT: ${{ secrets.FRONTEND_PORT }}
           VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
           VITE_MAP_KEY: ${{ secrets.VITE_MAP_KEY }}
+          VITE_CLIENT_ID: ${{ secrets.CLIENT_ID }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           port: ${{ secrets.VPS_PORT != '' && secrets.VPS_PORT || '22' }}
           # Liệt kê lại các biến để Action truyền qua SSH
-          envs: DATABASE_URL,MAPS_API_KEY,VNP_TMNCODE,VNP_HASH_SECRET,VNP_URL,VNP_API,VNP_RETURN_URL,FRONTEND_URL,EMAIL_USER,EMAIL_PASS,REFRESH_TOKEN,ACCESS_TOKEN,CLIENT_ID,CLIENT_SECRET,VITE_API_BASE_URL,VITE_MAP_KEY
+          envs: MAPS_API_KEY,VNP_TMNCODE,VNP_HASH_SECRET,VNP_URL,VNP_API,VNP_RETURN_URL,FRONTEND_URL,EMAIL_USER,EMAIL_PASS,REFRESH_TOKEN,ACCESS_TOKEN,CLIENT_ID,CLIENT_SECRET,POSTGRES_DB,POSTGRES_USER,POSTGRES_PASSWORD,DB_PORT,FRONTEND_PORT,VITE_API_BASE_URL,VITE_MAP_KEY,VITE_CLIENT_ID
           script_stop: true
           script: |
             set -e
             APP_DIR="${{ secrets.VPS_APP_DIR }}"
             REPO_URL="${{ secrets.VPS_REPO_URL }}"
+
+            POSTGRES_DB="${POSTGRES_DB:-secretpizza}"
+            POSTGRES_USER="${POSTGRES_USER:-secretpizza}"
+            POSTGRES_PASSWORD="${POSTGRES_PASSWORD:-secretpizza}"
+            DB_PORT="${DB_PORT:-5433}"
+            FRONTEND_PORT="${FRONTEND_PORT:-8081}"
+            DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}"
+            VITE_CLIENT_ID="${VITE_CLIENT_ID:-$CLIENT_ID}"
 
             if [ ! -d "$APP_DIR/.git" ]; then
               mkdir -p "$(dirname "$APP_DIR")"
@@ -97,10 +110,16 @@ jobs:
             git checkout main
             git pull origin main
 
-            # Sử dụng printf để ghi file .env (Sạch sẽ, không dính rác hệ thống)
-            printf "DATABASE_URL=\"$DATABASE_URL\"\nMAPS_API_KEY=\"$MAPS_API_KEY\"\nVNP_TMNCODE=\"$VNP_TMNCODE\"\nVNP_HASH_SECRET=\"$VNP_HASH_SECRET\"\nVNP_URL=\"$VNP_URL\"\nVNP_API=\"$VNP_API\"\nVNP_RETURN_URL=\"$VNP_RETURN_URL\"\nFRONTEND_URL=\"$FRONTEND_URL\"\nEMAIL_USER=\"$EMAIL_USER\"\nEMAIL_PASS=\"$EMAIL_PASS\"\nREFRESH_TOKEN=\"$REFRESH_TOKEN\"\nACCESS_TOKEN=\"$ACCESS_TOKEN\"\nCLIENT_ID=\"$CLIENT_ID\"\nCLIENT_SECRET=\"$CLIENT_SECRET\"\n" > backend/.env
+            # Root .env cho docker compose (db creds + build args)
+            printf "POSTGRES_DB=\"%s\"\nPOSTGRES_USER=\"%s\"\nPOSTGRES_PASSWORD=\"%s\"\nDB_PORT=\"%s\"\nFRONTEND_PORT=\"%s\"\nDATABASE_URL=\"%s\"\nVITE_API_BASE_URL=\"%s\"\nVITE_MAP_KEY=\"%s\"\nVITE_CLIENT_ID=\"%s\"\n" \
+              "$POSTGRES_DB" "$POSTGRES_USER" "$POSTGRES_PASSWORD" "$DB_PORT" "$FRONTEND_PORT" "$DATABASE_URL" "$VITE_API_BASE_URL" "$VITE_MAP_KEY" "$VITE_CLIENT_ID" > .env
 
-            printf "VITE_API_BASE_URL=\"$VITE_API_BASE_URL\"\nVITE_MAP_KEY=\"$VITE_MAP_KEY\"\nVITE_CLIENT_ID=\"$CLIENT_ID\"\n" > frontend/.env
+            # Sử dụng printf để ghi file .env (Sạch sẽ, không dính rác hệ thống)
+            printf "DATABASE_URL=\"%s\"\nMAPS_API_KEY=\"%s\"\nVNP_TMNCODE=\"%s\"\nVNP_HASH_SECRET=\"%s\"\nVNP_URL=\"%s\"\nVNP_API=\"%s\"\nVNP_RETURN_URL=\"%s\"\nFRONTEND_URL=\"%s\"\nEMAIL_USER=\"%s\"\nEMAIL_PASS=\"%s\"\nREFRESH_TOKEN=\"%s\"\nACCESS_TOKEN=\"%s\"\nCLIENT_ID=\"%s\"\nCLIENT_SECRET=\"%s\"\n" \
+              "$DATABASE_URL" "$MAPS_API_KEY" "$VNP_TMNCODE" "$VNP_HASH_SECRET" "$VNP_URL" "$VNP_API" "$VNP_RETURN_URL" "$FRONTEND_URL" "$EMAIL_USER" "$EMAIL_PASS" "$REFRESH_TOKEN" "$ACCESS_TOKEN" "$CLIENT_ID" "$CLIENT_SECRET" > backend/.env
+
+            printf "VITE_API_BASE_URL=\"%s\"\nVITE_MAP_KEY=\"%s\"\nVITE_CLIENT_ID=\"%s\"\n" \
+              "$VITE_API_BASE_URL" "$VITE_MAP_KEY" "$VITE_CLIENT_ID" > frontend/.env
 
             # Cập nhật và khởi động lại Docker với Env mới
             docker compose pull db || true
@@ -108,7 +127,7 @@ jobs:
             docker compose up -d --remove-orphans
 
             # Chờ Database sẵn sàng và chạy Migration
-            docker compose exec -T db sh -c 'until pg_isready -U postgres; do sleep 2; done'
+            docker compose exec -T db sh -c 'until pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"; do sleep 2; done'
             docker compose run --rm backend npx prisma migrate deploy
 
             # Dọn dẹp các Image cũ để giải phóng ổ cứng VPS
