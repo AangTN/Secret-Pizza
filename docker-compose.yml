@@ -8,7 +8,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-secretpizza}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-secretpizza}
     ports:
-      - "${DB_PORT:-5432}:5432"
+      - "${DB_PORT:-5433}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -76,7 +76,7 @@ services:
     container_name: secretpizza-frontend
     restart: unless-stopped
     ports:
-      - "${FRONTEND_PORT:-80}:80"
+      - "${FRONTEND_PORT:-8081}:80"
     depends_on:
       backend:
         condition: service_healthy
