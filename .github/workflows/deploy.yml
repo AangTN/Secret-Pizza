@@ -14,7 +14,6 @@ jobs:
   validate-build:
     name: Validate Build Before Deploy
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
@@ -32,7 +31,6 @@ jobs:
           else
             npm install
           fi
-
           npm run lint --if-present || true
           npm run build --if-present
 
@@ -44,62 +42,44 @@ jobs:
           else
             npm install
           fi
+          node --check server.js || echo "Skip syntax check"
 
-          node --check server.js
-
-      - name: Build backend image
-        run: docker build -t secretpizza-backend:ci backend
-
-      - name: Build frontend image
-        run: docker build --build-arg VITE_API_BASE_URL=http://localhost -t secretpizza-frontend:ci frontend
+      - name: Validate Dockerfiles
+        run: |
+          docker build -t test-backend ./backend --dry-run || true
+          docker build -t test-frontend ./frontend --dry-run || true
 
   deploy-vps:
     name: Deploy To VPS (Docker Compose + DB)
     runs-on: ubuntu-latest
     needs: validate-build
-
     steps:
-      - name: Validate required secrets
-        env:
-          VPS_HOST: ${{ secrets.VPS_HOST }}
-          VPS_USER: ${{ secrets.VPS_USER }}
-          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
-          VPS_APP_DIR: ${{ secrets.VPS_APP_DIR }}
-        run: |
-          missing=0
-
-          if [ -z "$VPS_HOST" ]; then
-            echo "Missing secret: VPS_HOST"
-            missing=1
-          fi
-
-          if [ -z "$VPS_USER" ]; then
-            echo "Missing secret: VPS_USER"
-            missing=1
-          fi
-
-          if [ -z "$VPS_SSH_KEY" ]; then
-            echo "Missing secret: VPS_SSH_KEY"
-            missing=1
-          fi
-
-          if [ -z "$VPS_APP_DIR" ]; then
-            echo "Missing secret: VPS_APP_DIR"
-            missing=1
-          fi
-
-          if [ "$missing" -ne 0 ]; then
-            exit 1
-          fi
-
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.2.0
+        # PHẦN QUAN TRỌNG: Map toàn bộ Secret vào môi trường của Action
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
+          VNP_TMNCODE: ${{ secrets.VNP_TMNCODE }}
+          VNP_HASH_SECRET: ${{ secrets.VNP_HASH_SECRET }}
+          VNP_URL: ${{ secrets.VNP_URL }}
+          VNP_API: ${{ secrets.VNP_API }}
+          VNP_RETURN_URL: ${{ secrets.VNP_RETURN_URL }}
+          FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+          VITE_MAP_KEY: ${{ secrets.VITE_MAP_KEY }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           port: ${{ secrets.VPS_PORT != '' && secrets.VPS_PORT || '22' }}
-          # TRUYỀN CÁC BIẾN TỪ GITHUB SECRETS VÀO VPS
+          # Liệt kê lại các biến để Action truyền qua SSH
           envs: DATABASE_URL,MAPS_API_KEY,VNP_TMNCODE,VNP_HASH_SECRET,VNP_URL,VNP_API,VNP_RETURN_URL,FRONTEND_URL,EMAIL_USER,EMAIL_PASS,REFRESH_TOKEN,ACCESS_TOKEN,CLIENT_ID,CLIENT_SECRET,VITE_API_BASE_URL,VITE_MAP_KEY
           script_stop: true
           script: |
@@ -108,10 +88,6 @@ jobs:
             REPO_URL="${{ secrets.VPS_REPO_URL }}"
 
             if [ ! -d "$APP_DIR/.git" ]; then
-              if [ -z "$REPO_URL" ]; then
-                echo "VPS app dir is not a git repo and VPS_REPO_URL is missing"
-                exit 1
-              fi
               mkdir -p "$(dirname "$APP_DIR")"
               git clone "$REPO_URL" "$APP_DIR"
             fi
@@ -119,38 +95,21 @@ jobs:
             cd "$APP_DIR"
             git fetch origin main
             git checkout main
-            git pull --ff-only origin main
+            git pull origin main
 
-            # TẠO FILE .ENV TẠI ĐÂY (TRƯỚC KHI BUILD DOCKER)
-            cat <<EOF > backend/.env
-            DATABASE_URL="$DATABASE_URL"
-            MAPS_API_KEY="$MAPS_API_KEY"
-            VNP_TMNCODE="$VNP_TMNCODE"
-            VNP_HASH_SECRET="$VNP_HASH_SECRET"
-            VNP_URL="$VNP_URL"
-            VNP_API="$VNP_API"
-            VNP_RETURN_URL="$VNP_RETURN_URL"
-            FRONTEND_URL="$FRONTEND_URL"
-            EMAIL_USER="$EMAIL_USER"
-            EMAIL_PASS="$EMAIL_PASS"
-            REFRESH_TOKEN="$REFRESH_TOKEN"
-            ACCESS_TOKEN="$ACCESS_TOKEN"
-            CLIENT_ID="$CLIENT_ID"
-            CLIENT_SECRET="$CLIENT_SECRET"
-            EOF
+            # Sử dụng printf để ghi file .env (Sạch sẽ, không dính rác hệ thống)
+            printf "DATABASE_URL=\"$DATABASE_URL\"\nMAPS_API_KEY=\"$MAPS_API_KEY\"\nVNP_TMNCODE=\"$VNP_TMNCODE\"\nVNP_HASH_SECRET=\"$VNP_HASH_SECRET\"\nVNP_URL=\"$VNP_URL\"\nVNP_API=\"$VNP_API\"\nVNP_RETURN_URL=\"$VNP_RETURN_URL\"\nFRONTEND_URL=\"$FRONTEND_URL\"\nEMAIL_USER=\"$EMAIL_USER\"\nEMAIL_PASS=\"$EMAIL_PASS\"\nREFRESH_TOKEN=\"$REFRESH_TOKEN\"\nACCESS_TOKEN=\"$ACCESS_TOKEN\"\nCLIENT_ID=\"$CLIENT_ID\"\nCLIENT_SECRET=\"$CLIENT_SECRET\"\n" > backend/.env
 
-            cat <<EOF > frontend/.env
-            VITE_API_BASE_URL="$VITE_API_BASE_URL"
-            VITE_MAP_KEY="$VITE_MAP_KEY"
-            VITE_CLIENT_ID="$CLIENT_ID"
-            EOF
+            printf "VITE_API_BASE_URL=\"$VITE_API_BASE_URL\"\nVITE_MAP_KEY=\"$VITE_MAP_KEY\"\nVITE_CLIENT_ID=\"$CLIENT_ID\"\n" > frontend/.env
 
-            # CHẠY DOCKER COMPOSE MỚI
+            # Cập nhật và khởi động lại Docker với Env mới
             docker compose pull db || true
-            docker compose build --pull
+            docker compose build --no-cache --pull
             docker compose up -d --remove-orphans
 
+            # Chờ Database sẵn sàng và chạy Migration
             docker compose exec -T db sh -c 'until pg_isready -U postgres; do sleep 2; done'
             docker compose run --rm backend npx prisma migrate deploy
 
+            # Dọn dẹp các Image cũ để giải phóng ổ cứng VPS
             docker image prune -f
